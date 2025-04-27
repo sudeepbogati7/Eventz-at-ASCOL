@@ -1,0 +1,49 @@
+{% extends 'event-dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12 px-6">
+    <div class="bg-gradient-to-br from-red-100 to-blue-100 shadow  rounded-2xl p-8">
+        <div class="flex flex-col items-center space-y-4">
+            <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center text-3xl font-bold text-gray-600">
+                {{ request.user.full_name|slice:":1" }}
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Hello, {{ request.user.full_name }}</h1>
+            <p class="text-gray-500">{{ request.user.email }}</p>
+        </div>
+
+        <div class="mt-8 space-y-4">
+            <div class="flex justify-between">
+                <span class="font-semibold text-gray-700">Roll Number:</span>
+                <span class="text-gray-600">{{ request.user.roll_num|default:"-" }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold text-gray-700">Batch:</span>
+                <span class="text-gray-600">{{ request.user.batch|default:"-" }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold text-gray-700">Faculty:</span>
+                <span class="text-gray-600">{{ request.user.faculty|default:"-" }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span class="font-semibold text-gray-700">Joined on:</span>
+                <span class="text-gray-600">{{ request.user.date_joined|date:"F d, Y" }}</span>
+            </div>
+            <div class="mt-6 text-center">
+                <button onclick="confirmLogout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Logout
+                </button>
+            </div>
+            <script>
+                function confirmLogout() {
+                    if (confirm("Are you sure you want to logout?")) {
+                        window.location.href = "{% url 'logout' %}";
+                    }
+                }
+            </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'event-dashboard.html' %}
+{% load static %}
+{% block title %} Add new event {% endblock %}
+{% block content %}
+<div class="bg-gray-50 min-h-screen">
+    <div class="flex">
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto focus:outline-none">
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <!-- Messages -->
+                    {% if messages %}
+                    <div class="mb-4 space-y-2">
+                        {% for message in messages %}
+                        <div
+                            class="p-4 rounded-lg text-sm font-medium 
+                                            {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-300{% endif %}
+                                            {% if message.tags == 'success' %}bg-green-100 text-green-700 border border-green-300{% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="flex items-center">
+                        <a href="{% url 'event_dashboard' %}" class="mr-4 text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <h1 class="text-2xl font-semibold text-gray-900">Add New Event</h1>
+                    </div>
+
+                    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Form Section -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="space-y-6">
+                                            <div>
+                                                <label for="title" class="block text-sm font-medium text-gray-700">Event
+                                                    Title</label>
+                                                <div class="mt-1">
+                                                    <input type="text" name="title" id="title"
+                                                        class="shadow-sm border py-2 px-4  focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        placeholder="Enter event title" required>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="description"
+                                                    class="block text-sm font-medium text-gray-700">Description</label>
+                                                <div class="mt-1">
+                                                    <textarea id="description" name="description" rows="3"
+                                                        class="shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        placeholder="Enter detailed description of the event"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div>
+                                                    <label for="date"
+                                                        class="block text-sm font-medium text-gray-700">Date and
+                                                        Time</label>
+                                                    <div class="mt-1">
+                                                        <input type="text" name="date" id="date"
+                                                            class="shadow-sm focus:ring-primary focus:border-primary px-4 py-2  border block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            placeholder="Select date and time" required>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label for="location"
+                                                        class="block text-sm font-medium text-gray-700">Location</label>
+                                                    <div class="mt-1">
+                                                        <input type="text" name="location" id="location"
+                                                            class="shadow-sm focus:ring-primary px-4 py-2 border focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md"
+                                                            placeholder="Enter venue or location" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="status"
+                                                    class="block text-sm font-medium text-gray-700">Status</label>
+                                                <div class="mt-1">
+                                                    <select id="status" name="status"
+                                                        class="px-4 py-2  border  shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md">
+                                                        <option value="upcoming" selected>Upcoming</option>
+                                                        <option value="ongoing">Ongoing</option>
+                                                        <option value="completed">Completed</option>
+                                                        <option value="cancelled">Cancelled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="image" class="block text-sm font-medium text-gray-700">Event
+                                                    Image</label>
+                                                <div
+                                                    class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                                    <div class="space-y-1 text-center">
+                                                        <svg class="mx-auto h-12 w-12 text-gray-400"
+                                                            stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                                                            aria-hidden="true">
+                                                            <path
+                                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                                stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                        <div class="flex text-sm text-gray-600">
+                                                            <label for="image"
+                                                                class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-secondary focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary">
+                                                                <span>Upload a file</span>
+                                                                <input id="image" name="image" type="file"
+                                                                    class="sr-only" accept="image/*">
+                                                            </label>
+                                                            <p class="pl-1">or drag and drop</p>
+                                                        </div>
+                                                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                                    </div>
+                                                </div>
+                                                <div id="preview-container" class="mt-3 hidden">
+                                                    <p class="text-sm font-medium text-gray-700 mb-1">Preview:</p>
+                                                    <img id="image-preview" class="h-32 w-auto object-cover rounded-md"
+                                                        src="#" alt="Event image preview">
+                                                </div>
+                                            </div>
+
+                                            <div class="flex justify-end">
+                                                <a href="{% url 'event_dashboard' %}"
+                                                    class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                                    Cancel
+                                                </a>
+                                                <button type="submit"
+                                                    class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                                    Create Event
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Illustration and Tips Section -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                <div class="px-4 py-5 sm:p-6">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Tips for Creating Great
+                                        Events</h3>
+                                    <div class="my-5 flex justify-center">
+                                        <img src="{% static 'images/add-event.svg' %}" alt="Event Planning Illustration"
+                                            class="h-48 w-auto rounded-lg">
+                                    </div>
+                                    <div class="mt-4 space-y-4">
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Use a clear, descriptive title that
+                                                    tells people what the event is about.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Include all important details like
+                                                    time, location, and what to bring.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Add an eye-catching image that
+                                                    represents your event.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm text-gray-700">Provide a detailed description that
+                                                    answers potential questions.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 bg-blue-50 p-4 rounded-md">
+                                        <div class="flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="fas fa-info-circle text-primary"></i>
+                                            </div>
+                                            <div class="ml-3">
+                                                <h3 class="text-sm font-medium text-primary">Need help?</h3>
+                                                <div class="mt-2 text-sm text-blue-700">
+                                                    <p>Check out our <a href="#" class="font-medium underline">event
+                                                            planning guide</a> or contact the admin team for assistance.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize date picker
+        flatpickr("#date", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today"
+        });
+
+        // Initialize TinyMCE rich text editor
+        tinymce.init({
+            selector: '#description',
+            height: 300,
+            menubar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px }'
+        });
+
+        // Preview image upload
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('image-preview');
+        const previewContainer = document.getElementById('preview-container');
+
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
+{% endblock %}

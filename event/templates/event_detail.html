@@ -1,0 +1,110 @@
+{% extends 'event-dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen">
+    <!-- Main Content -->
+    <div class="flex-1 -z-0 mt-8 overflow-auto focus:outline-none">
+        <div class="py-6">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Event Detail Header -->
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold text-gray-900">{{ event.title }}</h1>
+                    <div class="flex space-x-2">
+                        <a href="{% url 'edit_event' event.id %}"
+                            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            <i class="fas fa-edit mr-2"></i> Edit
+                        </a>
+                        <a href="{% url 'delete_event' event.id %}"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-danger hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <i class="fas fa-trash-alt mr-2"></i> Delete
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Event Image -->
+                <div class="mt-6">
+                    <img class="w-full h-96 object-cover rounded-lg {% if event.status == 'cancelled' %}opacity-70{% endif %}"
+                        src="{% if event.image %}{{ event.image.url }}{% else %}/static/images/add-event.svg{% endif %}"
+                        alt="{{ event.title }}">
+                </div>
+
+                <!-- Event Details -->
+                <div class="mt-6 bg-white shadow rounded-lg p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left Column: Core Details -->
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-alt mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Date:</span> {{ event.date|date:"F j, Y" }} at {{
+                                    event.date|time:"g:i A" }}
+                                </p>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Location:</span> {{ event.location }}
+                                </p>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-user mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Organizer:</span> {{ event.organizer.full_name }}
+                                </p>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-info-circle mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Status:</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                            {% if event.status == 'upcoming' %}bg-blue-100 text-blue-800{% endif %}
+                                            {% if event.status == 'ongoing' %}bg-green-100 text-green-800{% endif %}
+                                            {% if event.status == 'completed' %}bg-purple-100 text-purple-800{% endif %}
+                                            {% if event.status == 'cancelled' %}bg-red-100 text-red-800{% endif %}">
+                                        {{ event.get_status_display }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Timestamps -->
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Created:</span> {{ event.created_at|date:"F j, Y, g:i A"
+                                    }}
+                                </p>
+                            </div>
+                            <div class="mt-4 flex items-center">
+                                <i class="fas fa-clock mr-2 text-primary"></i>
+                                <p class="text-gray-700">
+                                    <span class="font-medium">Last Updated:</span> {{ event.updated_at|date:"F j, Y, g:i
+                                    A" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mt-6">
+                        <h2 class="text-xl font-semibold text-gray-900">Description</h2>
+                        <div class="mt-2 text-gray-600 prose max-w-none">
+                            {{ event.description|safe }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to Dashboard -->
+                <div class="mt-6">
+                    <a href="{% url 'event_dashboard' %}"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
