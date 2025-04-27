@@ -7,18 +7,49 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
+from django.contrib.auth import login
+from event.models import Event
 
 User = get_user_model()
 
 
 class HomeView(View):
     def get(self , request):
-        return render(request,'home.html')
+        events = Event.objects.filter(status='upcoming')[:3]
+        
+        return render(request, 'home.html' ,{'events': events})
     
 
-
 class LoginView(View):
-    template_name = 'login.html'
+    def get(self, request):
+        return render(request, "login.html")
+
+    def post(self, request):
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Validation
+        if not email or not password:
+            return render(request, "login.html", {"error": "Email and password are required."})
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return render(request, "login.html", {"error": "Invalid email or password."})
+
+        if not user.check_password(password):
+            return render(request, "login.html", {"error": "Invalid email or password."})
+
+        if not user.is_active:
+            return render(request, "login.html", {"error": "Your account is inactive. Please contact support."})
+
+        # Log the user in
+        login(request, user)
+        messages.success(request, "Login successful!")
+        return redirect('event_dashboard')
+
+class RegisterView(View):
+    template_name = 'register.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -61,7 +92,7 @@ class LoginView(View):
             return render(request, 'login.html', {f"error":e, "post_data": request.POST })
       
         messages.success(request, "Registration successful! Please verify your OTP.")
-        return redirect('login')
+        return redirect('event_dashboard')
     
 
 class VerifyOTPView(View):

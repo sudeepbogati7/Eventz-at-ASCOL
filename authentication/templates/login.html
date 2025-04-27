@@ -8,8 +8,9 @@
 
     <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
         <div class="text-center">
-            <h2 class="mt-6 text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-blue-600">
-                Let's Get into the Events in ASCOL
+            <h2
+                class="mt-6 text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-blue-600">
+                Welcome Back !
             </h2>
         </div>
         {% if error %}
@@ -33,12 +34,7 @@
         <form class="mt-8 space-y-6" method="POST">
             {% csrf_token %}
             <div class="rounded-md shadow-sm space-y-2">
-                <div>
-                    <label for="full-name" class="text-sm text-gray-500">Full Name *</label>
-                    <input value="{{ post_data.full_name|default:'' }}" id="full-name" name="full_name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
-                    placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary 
-                    focus:border-primary focus:z-10 sm:text-sm" placeholder="">
-                </div>
+
 
                 <div>
                     <label for="email-address" class="text-sm text-gray-500">Email address *</label>
@@ -47,40 +43,14 @@
                     placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary 
                     focus:border-primary focus:z-10 sm:text-sm" placeholder="example@example.com">
                 </div>
-                <div>
-                    <label for="roll-num" class="text-sm text-gray-500">Roll Number (Optional)</label>
-                    <input value="{{ post_data.roll_num|default:'' }}" id="roll-num" name="roll_num" type="text" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
-                    placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary 
-                    focus:border-primary focus:z-10 sm:text-sm" placeholder="Eg. 2006/078">
-                </div>
-                <div>
-                    <label for="faculty" class="text-sm text-gray-500">Faculty *</label>
-                    <select  id="faculty" name="faculty" required class="appearance-none relative block w-full px-3 py-2 border border-gray-300 
-                    placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary 
-                    focus:border-primary focus:z-10 sm:text-sm">
-                        <option value="" disabled selected>Select your faculty</option>
-                        <option value="science">Science (BSc)</option>
-                        <option value="humanities">BIT</option>
-                        <option value="education">BSc. CSIT </option>
-                        <option value="masters">MSc </option>
-                        <option value="mit">MIT</option>
 
-                    </select>
-                </div>
                 <div>
                     <label for="password" class="text-sm text-gray-500">Password *</label>
-                    <input value="{{ post_data.password|default:'' }}" id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
+                    <input value="{{ post_data.password|default:'' }}" id="password" name="password" type="password"
+                        autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
                     placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary 
                     focus:border-primary focus:z-10 sm:text-sm" placeholder="**********">
                 </div>
-                <div>
-                    <label for="c_password" class="text-sm text-gray-500">Confirm Password *</label>
-                    <input value="{{ post_data.c_password|default:'' }}" id="c_password" name="c_password" type="password" autocomplete="current-password" required
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 
-                    placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary 
-                    focus:border-primary focus:z-10 sm:text-sm" placeholder="************">
-                </div>
-
             </div>
 
             <div class="flex items-center justify-between">
@@ -109,51 +79,46 @@
                     Get me in &rarr;
                 </button>
             </div>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-600">
+                    Don't have an account?
+                    <a href="{% url 'register' %}" class="font-medium text-primary hover:text-secondary">
+                        Sign up
+                    </a>
+                </p>
+            </div>
         </form>
-
-        <!-- <div class="mt-6">
-            <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                    <span class="px-2 bg-white text-gray-500">Or continue with</span>
-                </div>
-            </div>
-
-            <div class="mt-6 grid grid-cols-3 gap-3">
-                <div>
-                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md 
-                    shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <i class="fab fa-google"></i>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md 
-                    shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md 
-                    shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="text-center mt-4">
-            <p class="text-sm text-gray-600">
-                Don't have an account?
-                <a href="#" class="font-medium text-primary hover:text-secondary">
-                    Sign up
-                </a>
-            </p>
-        </div> -->
     </div>
-
-
 </div>
+<script>
+    document.querySelector('form').addEventListener('submit', function () {
+        const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <span class="loader"></span> Logging in...
+        `;
+
+        // Add a simple loader animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .loader {
+                border: 2px solid #f3f3f3;
+                border-top: 2px solid #3498db;
+                border-radius: 50%;
+                width: 16px;
+                height: 16px;
+                animation: spin 1s linear infinite;
+                display: inline-block;
+                margin-right: 8px;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    });
+
+</script>
 
 {% endblock %}
