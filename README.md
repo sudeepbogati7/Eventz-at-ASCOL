@@ -25,7 +25,7 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
-5. Navigate the following url in your favourite web browser.
+5. Navigate into the following url in your favourite web browser.
 ```
 http://127.0.0.1:8000
 ```
