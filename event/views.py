@@ -222,3 +222,21 @@ class EventDetailsView(LoginRequiredMixin, View):
         }
         return render(request, 'event_detail.html', context)
     
+
+
+''''
+TODO:
+- Event notifications setup (IN app notification along with email notification)
+
+- Event Reminder and registering the participants in event.
+
+
+'''
+
+class EventNotificationsClass(LoginRequiredMixin, View):
+    login_url = "login"
+    def get(self,request):
+        pass
+    def post(self, request):
+        pass
+    
