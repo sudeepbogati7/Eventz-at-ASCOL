@@ -16,21 +16,14 @@ import bleach
 class EventDashboardView(LoginRequiredMixin, View):
     login_url = 'login'
     template_name = 'event-dashboard.html'
-    paginate_by = 6  # Show 6 events per page
+    paginate_by = 6
 
     def get(self, request):
-        # Get filter and search parameters
         status_filter = request.GET.get('status', '').lower()
         search_query = request.GET.get('search', '')
-
-        # Base queryset
         events = Event.objects.all()
-
-        # Apply status filter
         if status_filter in ['upcoming', 'ongoing', 'completed', 'cancelled']:
             events = events.filter(status=status_filter)
-
-        # Apply search filter
         if search_query:
             events = events.filter(
                 Q(title__icontains=search_query) |
@@ -67,26 +60,19 @@ class AddNewEventView(LoginRequiredMixin, View):
         return render(request, self.template_name)
 
     def post(self, request):
-        # Extract form data
         title = request.POST.get('title')
         description = request.POST.get('description')
         date_str = request.POST.get('date')
         location = request.POST.get('location')
         status = request.POST.get('status')
         image = request.FILES.get('image')
-
-        # Validate required fields
         if not all([title, description, date_str, location, status]):
             messages.error(request, "All required fields must be filled.")
             return render(request, self.template_name)
-
-        # Validate status
         valid_statuses = [choice[0] for choice in Event.STATUS_CHOICES]
         if status not in valid_statuses:
             messages.error(request, "Invalid status selected.")
             return render(request, self.template_name)
-
-        # Validate and parse date
         try:
             event_date = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M')
             event_date = timezone.make_aware(event_date)  # Make timezone-aware
